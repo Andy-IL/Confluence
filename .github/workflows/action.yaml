@@ -1,0 +1,45 @@
+name: 'Confluence'
+description: 'Script to create page, append to page and add files to Confleunce'
+inputs:
+  user_id:
+    description: 'Attlasian user ID'
+    required: true
+  api_token: 
+    description: 'Attlasian API token, SHOULD BE FROM SECRETS'
+    required: true
+  url:  
+    description: 'The url of the confleunce instance'
+    required: true
+  space:  
+    description: 'The Confluence space ID'
+    required: true
+  parent_page_id:  
+    description: 'The confleunce page to which you will attach the new child page'
+    required: true
+  title:  
+    description: 'The title of the new page'
+    required: true    
+    default: 'New untitled page'
+  content:  
+    description: 'Intitial content into page'
+    required: true    
+    default: 'Default page content'
+    
+runs:
+  using: "composite"
+  steps:
+    - name : Confluence
+      run: |
+        chmod 700 ${{ github.action_path }}/create_new_confluence_page.sh
+         #${{ inputs.title }}=$(echo ${{ inputs.title }} | sed 's/&/\&amp;/g')
+        #echo ${{ inputs.title }}
+        sh ${{ github.action_path }}/create_new_confluence_page.sh "${{ inputs.user_id }}" "${{ inputs.api_token }}" "${{ inputs.url }}"  "${{ inputs.space }}" "${{ inputs.parent_page_id }}" "${{ inputs.title }}" "${{ inputs.content }}"
+      shell: bash
+
+
+#TITLE=$6-$(date +%Y%m%d%H%M%S)
+##Ampersand throws Confleunce
+#TITLE=$(echo "$TITLE" | sed 's/&/\&amp;/g')
+#CONTENT=$7
+##Ampersand throws Confleunce
+#CONTENT=$(echo "$CONTENT" | sed 's/&/\&amp;/g')
