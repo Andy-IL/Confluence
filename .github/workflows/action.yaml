@@ -1,5 +1,18 @@
+#YML to add a new page to Confluence
+
+
 name: 'Confluence'
-description: 'Script to create page, append to page and add files to Confleunce'
+# description: 
+#     'Script to create page, append to page and add files to Confleunce'
+on:
+  push:
+  workflow_dispatch:
+
+jobs: 
+  Add_New_Page: 
+    runs-on: ubuntu-latest
+
+
 inputs:
   user_id:
     description: 'Attlasian user ID'
